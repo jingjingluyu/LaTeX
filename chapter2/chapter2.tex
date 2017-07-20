@@ -1,0 +1,171 @@
+%-*- coding: UTF-8 -*-
+\documentclass[UTF8]{ctexart}
+\usepackage{geometry}
+\geometry{a4paper,centering,scale=0.8}
+\usepackage[gen]{eurosym}
+
+\title{\heiti Chapter 2 Typesetting Text}
+\author{ Donald E. Knuth(高德纳)}
+
+\begin{document}
+\maketitle
+\section{文章和语言的结构}
+书写一篇文章最重要的一点是把想法、信息、知识传达给读者。 \LaTeX 与其他类型的排版系统不同，你只需要告诉它一个文本的逻辑结构和语义结构。然后
+根据文档类文件和各种样式的文件中所带有的“规则”来生成文件。
+
+\LaTeX 中最重要的文本单位是段。分段需要在对应的源码中空一行，如果要继续写可以用换行符，用\texttt{\textbackslash}\texttt{\textbackslash}或\texttt{\textbackslash}newline。下面是说明该换行还是该另起一段的三个正确示例：
+
+\texttt{\%} Example 1
+
+\texttt{\textbackslash}ldots when Einstein introduced his formula
+
+\texttt{\textbackslash}begin\texttt{\{}equation\texttt{\}}
+
+   \qquad e = m \texttt{\textbackslash}cdot c\texttt{~\^}2 \texttt{\textbackslash} ; ,
+
+\texttt{\textbackslash}end\texttt{\{}equation\texttt{\}}
+
+which is at the same time the most widely known
+
+and the least well understood physical formula.
+\\
+
+\texttt{\%} Example 2
+
+\texttt{\textbackslash}ldots from which follows Kirchhoff' s current law:
+
+\texttt{\textbackslash}begin\texttt{\{}equation\texttt{\}}
+
+  \qquad \texttt{\textbackslash}sum\texttt{\_}\texttt{\{}k=1\texttt{\}}\texttt{~\^}\texttt{\{}n\texttt{\}}  I\texttt{\_}k=0 \texttt{\textbackslash};
+
+\texttt{\textbackslash}end\texttt{\{}equation\texttt{\}}
+\\
+
+Kirchhoff' s voltage law can be derives \texttt{\textbackslash}ldots
+\\
+
+\texttt{\%} Example 3
+
+\texttt{\textbackslash}ldots which has several advantages.
+
+\texttt{\textbackslash}begin\texttt{\{}equation\texttt{\}}
+
+   \qquad I\texttt{\_}D = I\texttt{\_}F - I\texttt{\_}R
+
+\texttt{\textbackslash}end\texttt{\{}equation\texttt{\}}
+
+is the core of a very different transistor model. \texttt{\textbackslash}ldots
+\section{断行和断页}
+\subsection{合理分段}
+\begin{itemize}
+  \item \texttt{\textbackslash}\texttt{\textbackslash} or \texttt{\textbackslash}newline:
+
+  断行但不是另起一段。\texttt{\textbackslash}\texttt{\textbackslash}也在表格、公式等地方用于分行，而
+\texttt{\textbackslash}newline只用于文本段落中。
+  \item \texttt{\textbackslash}\texttt{\textbackslash}\texttt{$\ast$}：
+
+  断行，但不另起一页和不断页。
+  \item \texttt{\textbackslash}newpage or \texttt{\textbackslash}clearpage:
+
+  通常情况下两个命令都能起到另起一页的作用，但有一些区别：一是在双排版中 \texttt{\textbackslash}newpage 只起到另起一栏的作用；二是涉及到浮动体的排版上行为不同。
+
+  \item \texttt{\textbackslash}linebreak\texttt{[}$\langle$n$\rangle$\texttt{]} \texttt{\textbackslash}nolinebreak\texttt{[}$\langle$n$\rangle$\texttt{]} \texttt{\textbackslash}pagebreak\texttt{[}$\langle$n$\rangle$\texttt{]}
+  \texttt{\textbackslash}nopagebreak\texttt{[}$\langle$n$\rangle$\texttt{]}:
+
+  不满足于 \LaTeX 默认的断行和断页位置，用其高速哪些地方适合断页，哪些地方不合适。$\langle$n$\rangle$代表合适/不合适的程度，取值范围为 0-4，不带可选参数时，缺省为4。以上命令适合给出优先考虑断行断页\texttt{\textbackslash}禁止断行断页的位置，
+  但不适合直接拿来断行或断页，使用\texttt{\textbackslash}newline 或\texttt{\textbackslash}newpage 等是更好的选择。
+\end{itemize}
+\subsection{连字符}
+如果遇到很长的英文单词，仅在单词之间的位置断行无法生成宽度匀称的行时，就要考虑从单词中间段开。对于绝大部分单词，\LaTeX 能够找到合适的断词位置，在断开的行尾加上连字符 - 。如果一些单词没能自动断词，我们可以在单词内手动使用\texttt{\textbackslash}-命令指定断词的位置。
+另外，也可以使用\texttt{\textbackslash}hyphenation\texttt{\{}word list\texttt{\}}命令来指定使用连字符的位置，例如texttt{\textbackslash}hyphenation\texttt{\{}FORTRAN Hy-phen-a-tion\texttt{\}},其中的word list是不区分大小写的。
+\begin{itemize}
+   \item \texttt{\textbackslash}mbox\texttt{\{}text\texttt{\}}或\texttt{\textbackslash}fbox\texttt{\{}text\texttt{\}}:
+
+   会避免text被连字符分开。\texttt{\textbackslash}fbox\texttt{\textbackslash}mbox多了个可见的框。
+\end{itemize}
+\section{预定义好的字符串}
+\begin{itemize}
+  \item \texttt{\textbackslash}today : 打印当天日期
+  \item \texttt{\textbackslash}TeX : \TeX
+  \item \texttt{\textbackslash}LaTeX : \LaTeX
+  \item \texttt{\textbackslash}LaTeXe : \LaTeXe
+\end{itemize}
+\section{特殊字符和符号}
+\subsection{引号}
+\begin{itemize}
+  \item 双引号：``...tex...''
+  \item 单引号：`...tex...'
+
+     ``Please press the `x' key.''
+\end{itemize}
+\subsection{短划线和连字符}
+在\LaTeX 中有下面四种横杠：
+\begin{itemize}
+   \item - ：- 连字符，用于连接词语。
+
+   daughter-in-law, X-rated
+   \item - - ：-- 短破折号，常用于连接数字表示起止范围。
+
+   pages 13--67
+   \item - - - ：--- 长破折号，常用于表示意思的转换。
+
+   yes---or no?
+   \item \$-\$ ：$-$ 减号
+
+   $0$,$1$ and $-1$
+\end{itemize}
+\subsection{波浪线}
+\begin{itemize}
+    \item \texttt{\textbackslash}\texttt{~\~}\texttt{\{}\texttt{\}} ：\~{}
+
+http://www.rich.edu/\~{}bush
+    \item \$\texttt{\textbackslash}sim\$ : $\sim$
+
+http://www.clever.edu/$\sim$demo
+\end{itemize}
+\subsection{斜杠}
+\begin{itemize}
+  \item read/write: 不允许用连字符拆分
+  \item read\texttt{\textbackslash}slash write: 不允许用连字符拆分
+\end{itemize}
+\subsection{度}
+\begin{itemize}
+  \item \$30\texttt{\textbackslash}, \texttt{~\^}\texttt{\{}\texttt{\textbackslash}cric\texttt{\}}\texttt{\textbackslash}mathrm\texttt{\{}C\texttt{\}}\$ :
+$-30\,^{\circ}\mathrm{C}$
+  \item 30 \texttt{\textbackslash}textcelsius\texttt{\{}\texttt{\}}: 30 \textcelsius{}
+  \item 86 \texttt{\textbackslash}textdegree\texttt{\{}\texttt{\}}F: 86 \textdegree{}F
+\end{itemize}
+\subsection{欧元符号}
+ 首先需要在导言区加载textcomp包：
+
+ \texttt{\textbackslash}usepackage\texttt{\{}textcomp\texttt{\}}
+
+ 使用命令输出：
+
+ \texttt{\textbackslash}texteuro
+
+ 如果所用的字体不包含欧元符号或者想用别的字体的欧元符号,导入eurosym宏包，用gen来替换official参数可以使用和当前字体匹配的欧元符号:
+
+ \texttt{\textbackslash}usepackage[official]\texttt{\{}eurosym\texttt{\}}
+ \begin{itemize}
+  \item \texttt{\textbackslash}texteuro：\texteuro
+  \item \texttt{\textbackslash}euro: \euro
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
