@@ -151,9 +151,164 @@ $-30\,^{\circ}\mathrm{C}$
   \item \texttt{\textbackslash}texteuro：\texteuro
   \item \texttt{\textbackslash}euro: \euro
 \end{itemize}
+\subsection{省略号}
+\LaTeX 提供了命令\texttt{\textbackslash}ldots来生成省略号，相对于直接输入三个点的方式更为合理。\texttt{\textbackslash}ldots和\texttt{\textbackslash}dots是两个等效的命令。
+\begin{itemize}
+  \item ...:...
+  \item \texttt{\textbackslash}ldots:\ldots
+  \item \texttt{\textbackslash}dots:\dots
+\end{itemize}
+\subsection{连字}
+有些相邻的字母在排版时会连接起来，可以通过 \texttt{\textbackslash}mbox{} 命令避免它们相连。
+\begin{itemize}
+  \item f\mbox{}fshf\mbox{}ilf\mbox{}luf\mbox{}f\mbox{}ia：ffshfilfluffia
+  \item f \texttt{\textbackslash}mbox\texttt{\{}\texttt{\}} fshf \texttt{\textbackslash}mbox\texttt{\{}\texttt{\}} ilf \texttt{\textbackslash}mbox\texttt{\{}\texttt{\}}  luf \texttt{\textbackslash}mbox\texttt{\{}\texttt{\}}
+  f \texttt{\textbackslash}mbox\texttt{\{}\texttt{\}} ia
+\end{itemize}
+\subsection{重音符号和特殊符号}
+\LaTeX 支持用命令输入各种西欧语言的特殊符号和重音，重音符号和特殊符号命令列表：
+\begin{quote}
+  \`o  \qquad \'o  \qquad \^o  \qquad \~o \\
+  \=o  \qquad \.o  \qquad \"o  \qquad \c c \\
+  \u o \qquad \v o \qquad \H o \qquad \c o \\
+  \d o \qquad \b o \qquad \t oo \\
+  \oe  \qquad \OE  \qquad \ae  \qquad \AE \\
+  \aa  \qquad \AA \\
+  \o   \qquad  \O  \qquad \l  ~\qquad \L \\
+  \i   ~\qquad  \j  ~\qquad  !`  ~\qquad ?` \\
+\end{quote}
 
+\section{国际语言支持/中文排版支持}
+\LaTeX 对其他很多语言提供了支持。babel宏包可以用于对各种语言进行适配。排版中文有两种方式，一种是使用xeCJK宏包，另一种是使用 \CTeX 宏包和文档类。\CTeX 宏包和文档类是对 CJK 和 xeCJK 等宏包的进一步封装。文档类包括 \texttt{ctexart}、
+ctexrep、ctexbook，分别是对 \LaTeX 的三个标准文档类 article、report、
+book 的封装，对 \LaTeX 的排版样式做了许多调整，以切合中文排版风格。最新版本的 \CTeX 宏包/文档类甚至支持自
+动配置字体。
+\subsection{\CTeX 的安装}
+   \CTeX 宏集依赖的宏包和宏集已被最常见的 \TeX 发行版 \TeX Live 和 MiK\TeX 所收录。如果本地安装的 \TeX Live 或
+   MiK\TeX 不是完全版本，就需要通过这两个发行版提供的宏包管理器来安装宏包。
 
+   \TeX Live 的宏包管理器是 tlmgr。在Linux系统上，一般需要 sudo权限才能正确地执行
+   tlmgr的功能。
 
+直接使用 sudo tlmgr [arg]时，可能会提示找不到 tlmgr 或没有这个命令。sudo 有一种内置的保护机制，只会使用安全的环境变量 PATH。如果 \TeX Live 的路径不在
+sudo 的安全环境变量内，它就找不到相关的命令。可以在终端执行sudo gedit /etc/sudoers，然后将\TeX Live的路径添加到 sudo 的
+secure\_path 中。不同路径用 \texttt{:}隔开。
+
+问题解决后，在终端中依次执行以下命令，以更新 tlmgr 宏包管
+理器、已安装的所有宏包、安装 \CTeX 宏集。
+
+    sudo tlmgr update --self
+
+    sudo tlmgr update --all
+
+    sudo tlmgr install ctex
+\subsection{\CTeX 文档类}
+\CTeX 宏集提供了四个中文文档类：ctexart、ctexrep、ctexbook 和
+ctexbeamer，分别对应 \LaTeX 的标准文档类 article、report、book 和
+beamer。使用它们的时候，需要将涉及到的所有源文件使用 UTF-8 编码保存。
+
+下面是使用 ctexart 文档类编写的一个例子：
+
+    \texttt{\textbackslash}documentclass[UTF8]\texttt{\{}ctexart\texttt{\}}
+
+    \texttt{\textbackslash}begin\texttt{\{}document\texttt{\}}
+
+    \texttt{\textbackslash}end\texttt{\{}document\texttt{\}}
+\section{单词间的空格}
+\LaTeX 默认句子以句点、问号或者感叹号结尾。但是如果句点跟在一个大写字母后面，它不会认为这是句子结尾，因为大写字母后面跟句点往往是缩略词。
+
+用户可以通过具体的命令来改变上面的默认设定。一个斜杠跟一个空格会产生一个不会被扩大的空格；一个波浪线（\texttt{$\sim$}）
+会产生一个既不能被扩大、也不能从这里断行的空格；在句点前使用 \texttt{\textbackslash}@ 命令，不管这个句点是不是跟在大
+写字母后面，都会指定这个句子到句点就结束。使用 \texttt{\textbackslash}frenchspacing 命令可以强制不在一个句子后面插
+入多余的空格。如果使用 \texttt{\textbackslash}frenchspacing 命令就没必要再用 \texttt{\textbackslash}@ 了。
+
+例子：
+
+Mr.~Smith was happy to see her
+
+cf.~Fig.~5
+
+I like BASIC\@. What about you?
+\section{标题、章、节}
+文档类中的几种分层次结构命令：
+
+\texttt{\textbackslash}section\texttt{\{}...\texttt{\}}
+
+\texttt{\textbackslash}subsection\texttt{\{}...\texttt{\}}
+
+\texttt{\textbackslash}subsusection\texttt{\{}...\texttt{\}}
+
+\texttt{\textbackslash}paragraph\texttt{\{}...\texttt{\}}
+
+\texttt{\textbackslash}subparagraph\texttt{\{}...\texttt{\}}
+
+如果你想把你的文件分成不同的部分而不影响章节编号的的使用：
+
+\texttt{\textbackslash}part\texttt{\{}...\texttt{\}}
+
+当使用 report 和 book 类时：
+
+\texttt{\textbackslash}chapter\texttt{\{}...\texttt{\}}
+
+下面是两个比较特殊的情况：
+\begin{itemize}
+  \item \texttt{\textbackslash}part 命令不会影响 chapter 或 section 的编号。
+  \item \texttt{\textbackslash}appendix 命令没有任何参数，会把 chapter（对于 report、book）或 section（对于article）
+  的数字编号转换成字母编号。
+\end{itemize}
+
+\texttt{\textbackslash}tableofcontents 命令可以用于建立目录，目录就会在这条命令所在的位置生成。一般新写的文档需要编译两次才能正确生成目录，
+必要的时候\LaTeX 也会提示需要编译三次。
+
+以上的分章节的命令都有一个可以在命令名称后加一个星号的版本，例如\texttt{\textbackslash}section\texttt{\{}...\texttt{\}}命令，
+加星号之后的命令为\texttt{\textbackslash}section\texttt{$*$}\texttt{\{}...\texttt{\}},不同之处是加星版本的章节命令对应的标题不会显示在目录里，
+也不会被编号。
+
+有时候章节标题太长，这回导致其在目录里显示不佳。可以通过下面的命令在真真的标题前选择添加一个参数，指定在目录中显示的标题。
+\\
+
+\texttt{\textbackslash}chapter\texttt{[}Title for the table of contents\texttt{]}\texttt{\{}A long and espexially boring title, show
+in the text\texttt{\}}
+\\
+
+整个文档的标题是通过\texttt{\textbackslash}maketitle命令产生。在调用\texttt{\textbackslash}maketitle命令之前文档标题的内容
+需要由\texttt{\textbackslash}title\texttt{\{}...\texttt{\}}、\texttt{\textbackslash}author\texttt{\{}...\texttt{\}}、\texttt{\textbackslash}date\texttt{\{}...\texttt{\}}
+（可选）等参数指定。在\texttt{\textbackslash}author\texttt{\{}...\texttt{\}}命令的参数中，可以用\texttt{\textbackslash}and来间隔多个作者名字。
+
+\LaTeXe 在book文档有以下三个额外的命令，可以进行前沿、正文、后记的结构划分。这三个命令还可以和\texttt{\textbackslash}appendix命令结合，生成有前沿、正文、附录、后记四部分的文档。
+\begin{itemize}
+ \item \texttt{\textbackslash}frontmatter 前言部分，放置在文档主体的最开始（\texttt{\textbackslash}begin{$*$}\texttt{\{}document\texttt{\}}），
+ 他会把页码变成罗马数字，其后的\texttt{\textbackslash}chapter不编号
+ \item \texttt{\textbackslash}mainmatter 正文部分，页码为阿拉伯数字格式，从1开始计数，其后的章节编号正常
+ \item \texttt{\textbackslash}backmatter 后记部分，页码格式不变，继续正常计数；其后的\texttt{\textbackslash}chapter不编号
+\end{itemize}
+\section{交叉引用}
+当需要对图片表格等进行引用时，用下列命令：
+\begin{itemize}
+  \item \texttt{\textbackslash}label\texttt{\{}marher\texttt{\}}
+  \item \texttt{\textbackslash}ref\texttt{\{}marher\texttt{\}}
+  \item \texttt{\textbackslash}pageref\texttt{\{}marher\texttt{\}}
+\end{itemize}
+其中，maeker是由用户自行定义的标识符。
+\\
+
+A refernce to this subsection
+\label{sec:this} look like:
+``see section~\ref{sec:this} on
+page~\pageref{sec:this}."
+\section{脚注}
+可以使用\texttt{\textbackslash}footnote\texttt{\{}...\texttt{\}}命令来添加脚注，脚注应该紧跟在它注解的词或句子（包括标点符号）后面。
+
+由于脚注会分散读者的注意力，所以尽量在文章主体说清楚，少用脚注。
+\\
+
+Footnotes\footnote{This is a footnote.} are often used by people using \LaTeX.
+\section{强调}
+在\LaTeX 中可以通过\texttt{\textbackslash}underline\texttt{\{}...\texttt{\}}命令来实现。但在印刷书籍中，一般通过
+\texttt{\textbackslash}emph\texttt{\{}...\texttt{\}}命令，使用意大利字体进行强调。但并不是绝对的，需要结合具体语境。
+\\
+
+\emph{If you use emphasized text, then \LaTeX{} uses the \emph{normal} font for emphasizing.}
 
 
 
