@@ -309,17 +309,187 @@ Footnotes\footnote{This is a footnote.} are often used by people using \LaTeX.
 \\
 
 \emph{If you use emphasized text, then \LaTeX{} uses the \emph{normal} font for emphasizing.}
+\section{环境}
+环境的典型命令为\texttt{\textbackslash}begin\texttt{\{}\texttt{\textbackslash}emph\texttt{\{}environment\texttt{\}}\texttt{\}}
+ text \texttt{\textbackslash}end\texttt{\{}\texttt{\textbackslash}emph\texttt{\{}environment\texttt{\}}\texttt{\}} 其中environment
+是环境的名字。
 
+环境可以相互嵌套，例如：
 
+\texttt{\textbackslash}begin\texttt{\{}aaa\texttt{\}}
 
+   \qquad ...
 
+    \qquad  \texttt{\textbackslash}begin\texttt{\{}bbb\texttt{\}}
 
+      \qquad \qquad  ...
 
+    \qquad  \texttt{\textbackslash}end\texttt{\{}bbb\texttt{\}}
 
+   \qquad ...
 
+\texttt{\textbackslash}end\texttt{\{}aaa\texttt{\}}
 
+\subsection{Itemize , Enumerate , and Description}
+示例：
+\flushleft
+\begin{enumerate}
+\item You can nest the list environments to your taste:
+\begin{itemize}
+\item But it might start to look silly.
+\item[-] With a dash.
+\end{itemize}
+\item Therefore remember:
+\begin{description}
+\item[Stupid] things will not become smart because they are in a list.
+\item[Smart] things , though, can be presented beautifully in a list.
+\end{description}
+\end{enumerate}
+\subsection{Flushleft , Flushright , and Center}
+flushleft、flushright 和center环境分别会使段落左对齐、右对齐和居中。
 
+示例：
 
+flushleft:
+
+\begin{flushleft}
+This text is\\left-aligned.
+\LaTeX{} is not trying to make each line the same length.
+\end{flushleft}
+
+flushright:
+
+\begin{flushright}
+This text is right-\\aligned.
+\LaTeX{} is not trying to make each line the same length.
+\end{flushright}
+
+center:
+
+\begin{center}
+At the centre\\of the earth
+\end{center}
+
+\subsection{Quote , Quotation , and Verse}
+quote环境适合引用一些名言、重要的词句、示例等。
+
+示例代码：
+
+A typographical rule of thumb for the line length is:
+\begin{quote}
+On average, no line should be longer than 66 characters.
+\end{quote}
+This is why \LaTeX{} pages have such large why multicolumn print is used in newspapers.
+
+quotation环境verse环境很像。但由于quotation环境对每一段都会缩进，所以适合引用比较长的、一般有几段的内容；而verse环境很适合引用诗歌，利用\texttt{\textbackslash}\texttt{\textbackslash}或空行来分行。
+
+示例：
+
+I know only one English poem by heart.It is about Humpty Dumpty.
+\begin{flushleft}
+\begin{verse}
+Humpty Dumpty sat on a wall:\\
+Humpty Dumpty had a great fall.\\
+All the King's horses and all the King's men\\
+Couldn't put Humpty together again.
+\end{verse}
+\end{flushleft}
+\subsection{Abstract}
+在科学刊物中，一般会以一段摘要开头，让读者对这篇文章有一个整体认知，这是一个惯例。\LaTeX 的abstract环境就是用于写摘要的，一般用于article文档类。
+
+示例：
+\begin{abstract}
+This abstract abstract.
+\end{abstract}
+
+\subsection{Printing Verbatim}
+  在verbatim和verbatim之间的所有文本都会原封不动地打印出来，文本中的\LaTeX 命令不会被执行，所以可以用verbatim 环境来插入一段代码。
+
+  如果要插入行间代码，可以用\texttt{\textbackslash}verb+text+命令。其中的+只是分隔符，可以由用户虽已制定，但不能用字母、$\ast$ 或空格，习惯上用$\mid$。
+
+示例：
+
+The \verb|\ldots| command \ldots
+
+\begin{verbatim}
+10 PRINT "HELLO WORLD ";
+20 GOTO 10
+\end{verbatim}
+
+verbatim环境和verb命令都各自有一个加$\ast$ 的版本，区别是会把空格显示成\verb*| |。
+
+示例：
+
+\begin{verbatim*}
+the starred version of
+the       verbatim
+environment emphasizes
+the spaces   in the text
+\end{verbatim*}
+
+\verb*|like this :-) |
+
+verbatim环境和\texttt{\textbackslash}verb命令对符号的处理比较复杂，一般不能用在其他命令的参数里，否则多半会出错。
+\subsection{Tabular}
+tabular 环境可以用于排班表格，\LaTeX 会自动地调整表格每一列的宽度。具体命令如下：
+
+\qquad \texttt{\textbackslash}\texttt{\{}tabular\texttt{\}}[pos]\texttt{\{}talbe spec\texttt{\}}
+
+\qquad 其中，table spec参数决定了表格的格式，1、r、c 分别会使单元格内容左对齐、右对齐、居中，不拆行；
+$\mid$会绘制竖线；p\texttt{\{}width\texttt{\}}会使单元格固定宽度为width，可以自动拆行；可以通过\texttt{@\{...\}}
+来在单元格前后插入任意的文本，但同时它会使单元格前后额外添加的间距。
+
+\qquad 表格中每行的单元格数目不能多于列格式里 l\texttt{\textbackslash}c\texttt{\textbackslash}r\texttt{\textbackslash}p\texttt{\textbackslash}的总数（可以少于这个总数），
+否则出错。
+
+\qquad pos参数用于指定表格相对于环绕为基线的垂直位置，可以为 t 、b 和 c ，分别代表顶部、底部和中间。
+
+\qquad 在tabular环境内，\& 会跳到下一列，\texttt{\textbackslash}\texttt{\textbackslash}会新起一行，
+\texttt{\textbackslash}hline会插入一条水平线。使用\texttt{\textbackslash}cline\texttt{\{}i-j\texttt{\}}
+会插入一部分水平线，其中 i 和 j 是列的编号。
+\newline
+
+示例1：
+\newline
+
+\begin{tabular}{|r|l|}
+\hline
+7C0 & hexadecimal \\
+3700 & octal \\ \cline{2-2}
+11111000000 & binary \\
+\hline \hline
+1984 & decimal \\
+\hline
+\end{tabular}
+\newline
+
+示例2：
+\newline
+
+\begin{tabular}{|p{4.7cm}|}
+\hline
+Welcome to Boxy's paragraph.
+We Sincerely hope you'll all enjoy the show.\\
+\hline
+\end{tabular}
+\newline
+
+\qquad 如果想让表格的某一列按小数点对齐，又不使用额外的宏包（dcolumn)，可以采用一种比较折中的想法：把该列的所有小数
+部分，各作为一列，然后在tabular 环境中使用\texttt{@\{...\}}作为整数列和小数列的分隔符。整数部分和小数部分之间不要忘了用 \& 隔开，
+因为它们现在是两列了。为了在这两列的表头仅显示一个标签，可以使用\texttt{\textbackslash}multicolumn命令。
+\newline
+
+示例3：
+\newline
+
+\begin{tabular}{c r @{.} l}
+Pi expression       &
+\multicolumn{2}{c}{Value} \\
+\hline
+$\pi$               & 3&1416 \\
+$\pi^{\pi}$         & 36&46  \\
+$(\pi^{\pi})^{\pi}$ & 80662&7 \\
+\end{tabular}
 
 
 
