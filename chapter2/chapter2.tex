@@ -2,13 +2,19 @@
 \documentclass[UTF8]{ctexart}
 \usepackage{geometry}
 \geometry{a4paper,centering,scale=0.8}
+\usepackage{textcomp}
 \usepackage[gen]{eurosym}
+\usepackage{array}
 
 \title{\heiti Chapter 2 Typesetting Text}
 \author{ Donald E. Knuth(高德纳)}
 
 \begin{document}
 \maketitle
+
+\tableofcontents
+
+\newpage
 \section{文章和语言的结构}
 书写一篇文章最重要的一点是把想法、信息、知识传达给读者。 \LaTeX 与其他类型的排版系统不同，你只需要告诉它一个文本的逻辑结构和语义结构。然后
 根据文档类文件和各种样式的文件中所带有的“规则”来生成文件。
@@ -346,7 +352,7 @@ Footnotes\footnote{This is a footnote.} are often used by people using \LaTeX.
 \end{description}
 \end{enumerate}
 \subsection{Flushleft , Flushright , and Center}
-flushleft、flushright 和center环境分别会使段落左对齐、右对齐和居中。
+\qquad flushleft、flushright 和center环境分别会使段落左对齐、右对齐和居中。
 
 示例：
 
@@ -371,7 +377,7 @@ At the centre\\of the earth
 \end{center}
 
 \subsection{Quote , Quotation , and Verse}
-quote环境适合引用一些名言、重要的词句、示例等。
+\qquad quote环境适合引用一些名言、重要的词句、示例等。
 
 示例代码：
 
@@ -381,7 +387,7 @@ On average, no line should be longer than 66 characters.
 \end{quote}
 This is why \LaTeX{} pages have such large why multicolumn print is used in newspapers.
 
-quotation环境verse环境很像。但由于quotation环境对每一段都会缩进，所以适合引用比较长的、一般有几段的内容；而verse环境很适合引用诗歌，利用\texttt{\textbackslash}\texttt{\textbackslash}或空行来分行。
+\qquad quotation环境verse环境很像。但由于quotation环境对每一段都会缩进，所以适合引用比较长的、一般有几段的内容；而verse环境很适合引用诗歌，利用\texttt{\textbackslash}\texttt{\textbackslash}或空行来分行。
 
 示例：
 
@@ -395,7 +401,7 @@ Couldn't put Humpty together again.
 \end{verse}
 \end{flushleft}
 \subsection{Abstract}
-在科学刊物中，一般会以一段摘要开头，让读者对这篇文章有一个整体认知，这是一个惯例。\LaTeX 的abstract环境就是用于写摘要的，一般用于article文档类。
+\qquad 在科学刊物中，一般会以一段摘要开头，让读者对这篇文章有一个整体认知，这是一个惯例。\LaTeX 的abstract环境就是用于写摘要的，一般用于article文档类。
 
 示例：
 \begin{abstract}
@@ -403,9 +409,9 @@ This abstract abstract.
 \end{abstract}
 
 \subsection{Printing Verbatim}
-  在verbatim和verbatim之间的所有文本都会原封不动地打印出来，文本中的\LaTeX 命令不会被执行，所以可以用verbatim 环境来插入一段代码。
+\qquad 在verbatim和verbatim之间的所有文本都会原封不动地打印出来，文本中的\LaTeX 命令不会被执行，所以可以用verbatim 环境来插入一段代码。
 
-  如果要插入行间代码，可以用\texttt{\textbackslash}verb+text+命令。其中的+只是分隔符，可以由用户虽已制定，但不能用字母、$\ast$ 或空格，习惯上用$\mid$。
+\qquad 如果要插入行间代码，可以用\texttt{\textbackslash}verb+text+命令。其中的+只是分隔符，可以由用户虽已制定，但不能用字母、$\ast$ 或空格，习惯上用$\mid$。
 
 示例：
 
@@ -431,7 +437,7 @@ the spaces   in the text
 
 verbatim环境和\texttt{\textbackslash}verb命令对符号的处理比较复杂，一般不能用在其他命令的参数里，否则多半会出错。
 \subsection{Tabular}
-tabular 环境可以用于排班表格，\LaTeX 会自动地调整表格每一列的宽度。具体命令如下：
+\qquad tabular 环境可以用于排班表格，\LaTeX 会自动地调整表格每一列的宽度。具体命令如下：
 
 \qquad \texttt{\textbackslash}\texttt{\{}tabular\texttt{\}}[pos]\texttt{\{}talbe spec\texttt{\}}
 
@@ -490,7 +496,138 @@ $\pi$               & 3&1416 \\
 $\pi^{\pi}$         & 36&46  \\
 $(\pi^{\pi})^{\pi}$ & 80662&7 \\
 \end{tabular}
+\newline
 
+示例4：
+\newline
 
+\begin{tabular}{|c|c|}
+\hline
+\multicolumn{2}{|c|}{Ene} \\
+\hline
+Mene & Muh！\\
+\hline
+\end{tabular}
+\newline
 
+\qquad 有时候需要为整列修饰格式，比如整列改变为粗体，如果每个单元格都加上\texttt{\textbackslash}bfseries命令会比较麻烦。array宏包提供了辅助格式\texttt{>}和\texttt{<}，
+用于给格式前后加上修饰命令。辅助格式甚至支持插入\texttt{\textbackslash}centering等命令改变 p\texttt{\{}width\texttt{\}} 列格式的对齐方式，一般还要加额外的命令。辅助格式甚至支持插入
+\texttt{\textbackslash}centering 等命令会破坏表格环境里\texttt{\textbackslash}\texttt{\textbackslash}换行命令的定义，\texttt{\textbackslash}arraybackslash用来恢复之，
+如果不加\texttt{\textbackslash}arraybackslash命令，也可以用\texttt{\textbackslash}tabularnewline命令代替原来的\texttt{\textbackslash}\texttt{\textbackslash}实现表格换行。
+\newline
+
+示例5：
+\newline
+
+\begin{tabular}{>{\itshape}r<{*}l}
+\hline
+italic & normal \\
+column & column \\
+\hline
+\end{tabular}
+\newline
+
+示例6：
+\newline
+
+\begin{tabular}
+{>{\centering\arraybackslash}p{9em}}
+\hline
+Some center-aligned long text. \\
+\hline
+\end{tabular}
+\newline
+
+有时\LaTeX 默认的表格会比较拥挤，可以通过改变\texttt{\textbackslash}arraystretch 和\texttt{\textbackslash}tabcolsep参数来调节。
+\newline
+
+示例7：
+\newline
+
+\begin{tabular}{|l|}
+\hline
+These lines\\\hline
+are tight\\\hline
+\end{tabular}
+
+{\renewcommand{\arraystretch}{1.5}
+\renewcommand{\tabcolsep}{0.2cm}
+\begin{tabular}{|l|}
+\hline
+less cramped\\\hline
+table layout\\\hline
+\end{tabular}}
+\newline
+
+如果只想增加表格中某一行的高度，可以通过添加一条不可见的“支柱”来实现。即使用\texttt{\textbackslash}rule命令，并把宽度设置为0。
+\newline
+
+示例8：
+\newline
+
+\begin{tabular}{|c|}
+\hline
+\rule{1pt}{4ex}Pitprop \ldots\\
+\hline
+\rule{0pt}{4ex}Strut\\
+\hline
+\end{tabular}
+\newline
+
+如果想排版较长的表格，可以使用longtable环境。在booktabs宏包中，还有很多其他的命令可以美化表格。
+\section{浮动体}
+\qquad 一般的刊物、出版品都会有各种图表，由于这类元素不能跨页，所以需要特殊对待。有一种方法是每当遇到一个图或表在当前页放不开的时候，就新起一页。这种方法会让页面有比较多的留白，看起来会不美观。
+
+\qquad 一种比较好的解决方法是当前页放不开的时候，就新起一页。这种方法会让页面去，当前页面用正文进行填充。\LaTeX 提供了两种浮动体环境：
+figure和table,分别针对图片和表格。任何放在figure和table环境中的东西都会被视为是浮动体。
+
+\texttt{\textbackslash}\texttt{\{}figure\texttt{\}}[placement specifier] or \texttt{\textbackslash}begin\texttt{\{}table\texttt{\}}[...]
+
+\qquad 所有的浮动体环境都会有一个叫 placement specifier 的可选的参数，可以用于指定这个浮动体被允许移动到哪里。下面是placement specifier 参数的可选值（默认为tbp，优先级按照h-t-b-p排列，与顺序无关）：
+\begin{itemize}
+  \item h，当前位置（代码所处的上下文）
+  \item t，顶部，如果是当前页排版可能出现在代码之前
+  \item b，底部
+  \item p，一个或多个浮动体被放在单独的页面中，这个页面被称为浮动液面（float page），与之对应，有文本的页面称为文本页（text page)
+  \item !，再决定位置时忽略文本页的限制（\LaTeX 对每个位置的浮动体的总数和占用大小等有一定的限制），只有浮动页的限制（\texttt{\textbackslash}floatpagefraction 和\texttt{\textbackslash}dblfoatpagefraction）起效。
+\end{itemize}
+\qquad \LaTeX 会根据用户指定的 placement specifier 参数来防止每个浮动体。如果一个浮动体不能被放置在当前页，他就会被加入 figures 队列或 tables 队列。当新起一页的时候，\LaTeX 会先检查能否把这一页作为一个浮动页来放置队列中的浮动体。
+如果不行，队列中的第一个浮动体就会被认为是这个新起的一页刚产生的，然后\LaTeX 就再次根据他们的placement spacifier参数在这个新起的一页进行放置。
+\LaTeX 会严格地按照浮动体在队列中的顺序来执行这一过程，这也就是为什么如果figures队列中的第一个图片一直无法放置，那么所有的图片都会被拖到文档最后的原因。因此，如果\LaTeX 没有按照要求放置浮动体，在两个浮动体队列中经常会出现一个干扰下一个的情况。
+
+\qquad 尽管可以只指定一个值给 placement specifier 参数，但这样往往会产生问题，一个浮动体没法放置，之后的浮动体也会受到阻碍无法放置。永远都不要只给 placement specifier 参数设置一个 h，这很容易产生问题，以至于新版本的\LaTeX 会自动将其替换为ht。
+
+\qquad float 宏包为浮动体提供了 H 位置参数，不与 htbp 及 ！混用。使用 H 位置参数时，会自动取消浮动机制，将浮动体视为一般的盒子插入当前位置。
+
+\qquad 用\texttt{\textbackslash}caption\texttt{\{}caption text\texttt{\}}命令来给 table 或figure 环境加说明文字，\LaTeX 会自动根据其类型分别编号。
+
+\qquad \texttt{\textbackslash}liatoffigures 和\texttt{\textbackslash}listoftables命令和\texttt{\textbackslash}tableofcontents命令很类似，可以用于建立图表索引。这种图表索引会完整地显示所有图标的说明文字，所以如果说明文字太长也不太好，这时可以用
+\texttt{\textbackslash}caption[Short][LLLLLLLooooonnnnnggggggg]命令来指定一个对应的短点的说明。
+
+\qquad 可以通过\texttt{\textbackslash}label 和\texttt{\textbackslash}ref命令来对浮动体建立标签和进行引用。需注意，既然是要引用图表的编号，所以要把\texttt{\textbackslash}label 命令放置在\texttt{\textbackslash}caption之后。
+
+示例：
+
+Figure~\texttt{\textbackslash}ref\texttt{\{}white\texttt{\}} is an example of Pop-Art。
+\texttt{\textbackslash}begin\texttt{\{}figure\texttt{\}}[!hbtp]
+\texttt{\textbackslash}makebox[\texttt{\textbackslash}textwidth]\texttt{\{}\texttt{\textbackslash}framebox[5cm]\texttt{\{}\texttt{\textbackslash}rule\texttt{\{}Opt\texttt{\}}\texttt{\{}5cm\texttt{\}}\texttt{\}}\texttt{\}}
+\texttt{\textbackslash}caption\texttt{\{}Five by Five in Centimetres.\texttt{\textbackslash}label\texttt{\{}white\texttt{\}}\texttt{\}}
+\texttt{\textbackslash}end\texttt{\{}figure\texttt{\}}
+
+\qquad 在上面的实例中，[！hbtp]是\LaTeX 中最宽松的浮动体位置参数。\LaTeX 会先努力尝试（!）将图片放置在产生它代码所在的上下文位置（h）。如果不行，他会尝试放置在该页的底部（b）。如果还是不行，就不能放在该页了，
+它会考虑能不能建立一个浮动体页来防止这个浮动体以及其他的浮动体。如果不满足新建一个浮动体页的条件，那 \LaTeX 就会新起一页，并把它看作是新起的一页刚产生的浮动体，并按照它的参数重新放置。
+
+\qquad 在遇到\texttt{\textbackslash}clearpage、\texttt{\textbackslash}cleardoublepage 或\texttt{\textbackslash}end\texttt{\{}document\texttt{\}}这三个命令时，所有队列中未处理的浮动体都会直接输出，
+placement specifier 参数中的 p 选项也会打开以保证可以将所有的浮动体输出。
+
+\section{保护脆弱命令}
+\qquad \texttt{\textbackslash}caption和\texttt{\textbackslash}section这种命令以文本作为参数，而且这些文本参数在文档中可能不只一次的出现，所以这些文本参数成为移动参数。但有些脆弱命令，如\texttt{\textbackslash}footnote和\texttt{\textbackslash}phantom
+等，作为它们的参数时候会失效，甚至引起报错。需要在脆弱命令前加上\texttt{\textbackslash}protect命令来保护它们，这样它们就可以作为移动参数了。
+
+\qquad \texttt{\textbackslash}protect 命令只会影响紧跟在它之后的一个命令，一半多加了\texttt{\textbackslash}protect命令也不会出什么问题。
+
+示例：
+
+\texttt{\textbackslash}section\texttt{\{}I am considerate
+        \texttt{\textbackslash}protect\texttt{\textbackslash}footnote\texttt{\{}and protect my footnotes\texttt{\}}\texttt{\}}
 \end{document}
