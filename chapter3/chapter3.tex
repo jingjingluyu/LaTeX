@@ -1,0 +1,209 @@
+
+%-*- coding: UTF-8 -*-
+% Math.tex
+%
+\documentclass[UTF8]{ctexart}
+\usepackage{geometry}
+\geometry{a4paper, centering, scale=0.8}
+\usepackage{amsmath}
+\usepackage{amssymb} % to use \mathbb
+\usepackage[retainorgcmds]{IEEEtrantools} % to use \IEEEeqnarray
+\usepackage{amsthm}
+
+\title{\heiti 第3章 \quad 排版数学公式}
+\author{Donald E. Knuth(高德纳)}
+\date{\today}
+
+\DeclareMathOperator{\argh}{argh}
+\DeclareMathOperator*{\nut}{Nut}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\newpage
+\section{ \AmS-\LaTeX{} 宏集}
+在介绍数学公式排版之前，简单介绍一下 \AmS-\LaTeX{} 宏集。 \AmS-\LaTeX{} 宏集合是美国数学学会（American Mathematical Society)
+提供的对\LaTeX 原生的数学公式排版的扩展，其核心是amsmath宏包，对多行公式的排版提供了有力的支持。此外，amsfonts宏包以及基于它的amssymb
+宏包提供了丰富的数学符号；amsthm宏包扩展了\LaTeX 定理证明格式。在本章，需要在导言区使用\texttt{\textbackslash}usepackage\texttt{\{}
+amsmath\texttt{\}}命令引入amsmath宏包。
+\section{单个方程}
+数学公式有两个排版方式：其一是与文字混排，称为行内公式；其二是单独列为一行排版，称为行间公式。
+
+行内公式由一对\$符号包裹：
+
+示例：
+
+Add $a$ squared and $b$ squared to get $c$
+
+squared. Or, using a more mathematical
+
+approach:$a^2 + b^2 = c^2$
+\newline
+
+\TeX{} is pronounced as $\tau\epsilon\chi$
+
+100~m$^{3}$ of water
+
+This comes from my $\heartsuit$
+
+行间公式放在\texttt{\textbackslash}begin\texttt{\{}equation\texttt{\}}和\texttt{\textbackslash}end\texttt{\{}equation\texttt{\}}之间。
+可以通过\texttt{\textbackslash}label和\texttt{\textbackslash}eqref来给公式添加标签和建立引用，用\texttt{\textbackslash}tag来给公式指定具体的名字。
+
+示例：
+
+Add $a$ squares and $b$ squared to get
+$c$ squared. Or, using a more mathematical approach
+\begin{equation}
+  a^2 + b^2 = c^2
+\end{equation}
+\qquad Einstein says
+\begin{equation}
+  E = mc^2 \label{clever}
+\end{equation}
+\qquad He didn't say
+\begin{equation}
+  1 + 1 = 3 \tag{dumb}
+\end{equation}
+\qquad This is a reference to
+\eqref{clever}
+
+如果不想给公式编号，用 equation 的加星版本 equation$*$；或者把公式放在\texttt{\textbackslash}[和\texttt{\textbackslash}]之间。
+
+示例：
+
+Add $a$ squares and $b$ squared to get
+$c$ squared. Or, using a more mathematical approach
+\begin{equation*}
+  a^2 + b^2 = c^2
+\end{equation*}
+\qquad or you can type less for the same effect:
+\[ a^2 + b^2 = c^2 \]
+
+虽然\texttt{\textbackslash}[和\texttt{\textbackslash}]很简洁，但是使用时不能像equation和equation$*$那样再有编号和无编号之间切换。
+
+注意排版格式中行内公示（text style）和行间公式（display style）的区别。
+
+示例：
+
+This is text style:
+$\lim_{n \to \infty}
+ \sum_{k=1}^n \frac{1}{k^2}
+= \frac{\pi^2}{6}$.
+And this is display style:
+ \begin{equation}
+   \lim_{n \to \infty}
+   \sum_{k=1}^n \frac{1}{k^2}
+   = \frac{\pi^2}{6}
+\end{equation}
+
+在排版行间公式，可以把一些比较高的公式放在\texttt{\textbackslash}smash命令里，让\LaTeX 忽略这些公式的高度，使行间距保持不变。
+
+示例：
+
+A $d_{e_{e_{p_{e_r}}}}$ mathematical expression followed
+
+by a $h^{i^{g^{h^{e^r}}}}$ expression. As opposed to a
+
+smashed \smash{$d_{e{e_{p_{e_r}}}}$} expression followed by a
+\smash{$h^{i^{g^{h^{e^r}}}}$}
+
+ expression.
+\subsection{数学模式}
+当你使用\$开启行内公示输入，或是使用\texttt{\textbackslash}[命令、equation 环境时，你就进入了所谓的数学模式。
+数学模式相比于文本模式有以下特点：
+\begin{enumerate}
+\item 数学模式中输入的空格全部被忽略。数学符号的间隙默认完全由符号的性质（关系符号、运算符号等）决定。需要人为引入空隙时，
+使用\texttt{\textbackslash}quad和\texttt{\textbackslash}qquad等命令。
+\item 不允许有空行（分段），公式也无法自动换行或者用\texttt{\textbackslash}\texttt{\textbackslash}换行。排版多行公式需要用到各种环境。
+\item 所有的字母被当做数学公式中的变量处理，字母间距语文本模式不一致，也无法生成单词之间的空格。如果想在数学公式中输入
+正体的文本，简单情况下可以用\texttt{\textbackslash}mathrm命令。或者用amsmath提供的\texttt{\textbackslash}text命令。
+\end{enumerate}
+示例：
+
+$\forall x \in \mathbf{R}:\qquad x^{2} \geq 0$
+
+
+$x^{2} \geq 0 \qquad
+\text{for \textbf{all} }
+x\in\mathbf{R}$
+
+数学家们对应该使用什么符号很挑剔：上面的公式最好使用``blackboard bold”字体，可以使用amssymb宏包里的\texttt{\textbackslash}mathbb
+命令来完成。
+
+示例：
+
+$x^{2} \geq 0 \qquad
+\text{for \textbf{all} }
+x\in\mathbb{R}$
+
+\section{构建数学公式块}
+在这一小节中大部分的命令都不需要引入amsmath宏包。
+\subsection{希腊字母}
+小写希腊字母通过\texttt{\textbackslash}alpha、\texttt{\textbackslash}beta、\texttt{\textbackslash}gamma等输入，答谢希腊字母通过\texttt{\textbackslash}Gamma、\texttt{\textbackslash}Delta等输入。
+
+示例：
+
+$\lambda, \xi, \pi, \theta, \mu, \Phi, \Omega, \Delta$
+\subsection{指数，上标，下标}
+指数、上标和下标可以分别通过 \texttt{~\^} 和 \texttt{\_ }指定。大多数的数学模式命令仅对它之后的那个字母起作用所以如果想对多个字母起作用，应该用\texttt{\{}...\texttt{\}}括起来。
+
+示例：
+
+$p^3_{ij} \qquad m_\text{Knuth}\qquad \sum_{k=1}^3 k$
+
+$a^x+y \neq a^{x+y}\qquad e^{x^2} \neq {e^x}^2$
+
+\subsection{根式}
+通过\texttt{\textbackslash}sqrt输入平方根；通过\texttt{\textbackslash}sqrt[n]输入n次方根。根号的大小是由\LaTeX 自动决定的，
+如果只需要一个符号标记，可以用\texttt{\textbackslash}surd命令。
+
+示例：
+
+$\sqrt{x} \Leftrightarrow x^{1/2} \quad \sqrt[3]{2} \quad \sqrt{x^{2} + \sqrt{y}}
+\quad \surd[x^2 +y^2]$
+\subsection{点}
+示例：
+
+$\Psi = v_1 \cdot v_2 \cdot \ldots \qquad n! = 1 \cdot 2 \cdots (n-1) \cdot n
+\qquad \vdots \qquad \ddots$
+\subsection{横线}
+利用\texttt{\textbackslash}overline和\texttt{\textbackslash}underline命令来产生上划线和下划线。
+
+示例：
+
+$0.\overline{3} = \underline{\underline{1/3}}$
+\subsection{水平花括号}
+利用\texttt{\textbackslash}overbrace 和\texttt{\textbackslash}underbrace命令来产生水平的上、下花括号。
+
+示例：
+
+$\underbrace{\overbrace{a+b+c}^6 \cdot \overbrace{d+e+f}^7}_\text{meaning of life} = 42$
+\subsection{数学重音符号}
+示例：
+
+$f(x) =x^2 \qquad f'(x) =2x \qquad f''(x) = 2\\[5pt]
+\hat{XY} \quad \widehat{XY} \quad \bar{x_0} \quad \bar{x}_0\\[5pt]
+\tilde{a} \quad widetilde{a}$
+
+注意：上面的示例中，\texttt{\textbackslash}\texttt{\textbackslash}命令后跟了可选参数[5pt]来增加额外的行距。
+\subsection{向量}
+在变量上加箭头来表示向量，可以通过\texttt{\textbackslash}vec命令完成。
+
+示例：
+
+$\vec{a} \qquad \vec{AB} \qquad \overrightarrow{AB}$
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
